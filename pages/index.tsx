@@ -6,7 +6,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const { data, error } = await supabase.from('try_table').select('try_column')
+      const { data, error } = await supabase.from('feeding_schedule').select('feeding_date, user_id')
       if (error) console.error(error)
       else setData(data)
     }
