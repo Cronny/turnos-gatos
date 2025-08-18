@@ -1,0 +1,91 @@
+.main {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #ffffff, #f5e6e0, #d4c1bc);
+}
+
+.title {
+  text-align: center;
+  color: #4a4a4a;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.todayMessage {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+}
+
+.userName {
+  color: #9c6644;
+  font-weight: bold;
+}
+
+.calendarContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.calendar {
+  width: 100%;
+  border: none !important;
+  border-radius: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  background-color: #9c6644;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #7d513a;
+  transform: translateY(-2px);
+}
+
+/* Estilos para los usuarios en el calendario */
+:global(.user-1) {
+  background-color: #bbdefb !important;
+}
+
+:global(.user-2) {
+  background-color: #c8e6c9 !important;
+}
+
+:global(.user-3) {
+  background-color: #ffcdd2 !important;
+}
+
+:global(.react-calendar button) {
+  color: #000000;
+}
+
+:global(.react-calendar__month-view__days__day--weekend) {
+  color: #000000;
+}
+
+:global(.react-calendar__month-view__weekdays) {
+  color: #757575;
+}
+
+:global(.react-calendar__month-view__days__day--neighboringMonth) {
+  color: #eab676;
+}
