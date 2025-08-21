@@ -3,7 +3,7 @@ import { supabase } from '../utils/supabaseClient'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import styles from '../styles/Home.module.css'
-import {esMX} from 'date-fns/locale';
+import { es } from 'date-fns/locale';
 
 type FeedingSchedule = {
   feeding_date: string
