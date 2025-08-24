@@ -66,12 +66,25 @@ export default function Home() {
         </h2>
       )}
       
-      <div className={styles.calendarContainer}>
-        <Calendar
-          className={styles.calendar}
-          tileClassName={getTileClassName}
-          locale="es-MX"
-        />
+        <div className={styles.calendarContainer}>
+          <Calendar
+            className={styles.calendar}
+            tileClassName={getTileClassName}
+            locale="es"
+          />
+        </div>
+
+      <div className={styles.calendarSection}>
+        <div className={styles.legend}>
+          <h3>Usuarios:</h3>
+          {users.map((user) => (
+            <div key={user.id} className={styles.legendItem}>
+              <div className={`${styles.colorBox} user-${user.id}`}></div>
+              <span>{user.name}</span>
+            </div>
+          ))}
+        </div>
+        
       </div>
       
       <div className={styles.buttonContainer}>

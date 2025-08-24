@@ -1,0 +1,28 @@
+/* styles/globals.css */
+.user-1 {
+  background-color: #bbdefb !important; 
+}
+
+.user-2 {
+  background-color: #c8e6c9 !important;
+}
+
+.user-3 {
+  background-color: #ffcdd2 !important;
+}
+
+.react-calendar button {
+  color: #000000;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #000000;
+}
+
+.react-calendar__month-view__weekdays {
+  color: #757575;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #eab676;
+}

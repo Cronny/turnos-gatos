@@ -61,31 +61,55 @@
   transform: translateY(-2px);
 }
 
-/* Estilos para los usuarios en el calendario */
-:global(.user-1) {
-  background-color: #bbdefb !important;
+.calendarSection {
+  display: flex;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-:global(.user-2) {
-  background-color: #c8e6c9 !important;
+.legend {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: fit-content;
 }
 
-:global(.user-3) {
-  background-color: #ffcdd2 !important;
+.legend h3 {
+  margin: 0 0 1rem 0;
+  color: #4a4a4a;
+  font-size: 1.2rem;
 }
 
-:global(.react-calendar button) {
-  color: #000000;
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
-:global(.react-calendar__month-view__days__day--weekend) {
-  color: #000000;
+.colorBox {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
 }
 
-:global(.react-calendar__month-view__weekdays) {
-  color: #757575;
+/* Modifica el contenedor del calendario para que se ajuste al nuevo layout */
+.calendarContainer {
+  flex: 1;
+  /* ...existing calendarContainer styles... */
 }
 
-:global(.react-calendar__month-view__days__day--neighboringMonth) {
-  color: #eab676;
+/* Asegúrate que los colorBox tengan los mismos colores que los días marcados */
+.colorBox.user-1 {
+  background-color: #bbdefb;
+}
+
+.colorBox.user-2 {
+  background-color: #c8e6c9;
+}
+
+.colorBox.user-3 {
+  background-color: #ffcdd2;
 }
