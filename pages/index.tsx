@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css'
 import { es } from 'date-fns/locale';
 
 type FeedingSchedule = {
+  id: number
   feeding_date: string
   user_id: number
 }
