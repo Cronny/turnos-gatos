@@ -30,6 +30,7 @@
   background: rgba(255, 255, 255, 0.8);
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex: 1;
 }
 
 .calendar {
@@ -87,6 +88,7 @@
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.8rem;
+  color: grey;
 }
 
 .colorBox {
@@ -95,10 +97,12 @@
   border-radius: 4px;
 }
 
-/* Modifica el contenedor del calendario para que se ajuste al nuevo layout */
-.calendarContainer {
+.usersBox {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  align-items: center;
   flex: 1;
-  /* ...existing calendarContainer styles... */
 }
 
 /* Asegúrate que los colorBox tengan los mismos colores que los días marcados */

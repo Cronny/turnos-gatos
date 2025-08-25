@@ -10,12 +10,28 @@ type FeedingSchedule = {
   user_id: number
 }
 
+type User = {
+  id: number
+  name: string
+}
+
 export default function Home() {
   const [scheduleData, setScheduleData] = useState<FeedingSchedule[]>([])
   const [todayUser, setTodayUser] = useState<string>('')
+  const [users, setUsers] = useState<User[]>([])
 
   useEffect(() => {
     async function fetchData() {
+      // Obtener usuarios
+      const { data: usersData, error: usersError } = await supabase
+        .from('users')
+        .select('id, name')
+        .order('id')
+
+      if (!usersError && usersData) {
+        setUsers(usersData)
+      }
+
       const { data, error } = await supabase
         .from('feeding_schedule')
         .select('feeding_date, user_id')
@@ -25,7 +41,7 @@ export default function Home() {
         setScheduleData(data)
         
         // Encontrar el usuario de hoy
-        const today = new Date().toISOString().split('T')[0]
+        const today = new Date().toLocaleDateString('en-CA')
         const todaySchedule = data.find(
           (schedule: FeedingSchedule) => schedule.feeding_date === today
         )
@@ -56,6 +72,16 @@ export default function Home() {
     return ''
   }
 
+  const getActualUser = ({ date }: { date: Date }) => {
+    const dateString = date.toISOString().split('T')[0]
+    const schedule = scheduleData.find(s => s.feeding_date === dateString)
+    
+    if (schedule) {
+      return `user-${schedule.user_id}`
+    }
+    return ''
+  }
+
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>🐱 Turnos para Alimentar</h1>
@@ -66,14 +92,26 @@ export default function Home() {
         </h2>
       )}
       
-        <div className={styles.calendarContainer}>
-          <Calendar
-            className={styles.calendar}
-            tileClassName={getTileClassName}
-            locale="es"
-          />
-        </div>
+      <div className={styles.calendarContainer}>
+        <Calendar
+          className={styles.calendar}
+          tileClassName={getTileClassName}
+          locale="es"
+        />
+      </div>
 
+      <div className={styles.usersBox}>
+        <div className={styles.legend}>
+          {users.map((user) => (
+            <div key={user.id} className={styles.legendItem}>
+              <div className={`${styles.colorBox} user-${user.id}`}></div>
+              <span>{user.name}</span>
+            </div>
+          ))}
+        </div>
+        
+      </div>
+      
       <div className={styles.buttonContainer}>
         <button className={styles.button}>
           Cambiar Persona
