@@ -19,6 +19,9 @@ export default function Home() {
   const [scheduleData, setScheduleData] = useState<FeedingSchedule[]>([])
   const [todayUser, setTodayUser] = useState<string>('')
   const [users, setUsers] = useState<User[]>([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null)
+  const [todayScheduleId, setTodayScheduleId] = useState<number | null>(null)
 
   useEffect(() => {
     async function fetchData() {
@@ -34,7 +37,7 @@ export default function Home() {
 
       const { data, error } = await supabase
         .from('feeding_schedule')
-        .select('feeding_date, user_id')
+        .select('id, feeding_date, user_id')
       
       if (error) console.error(error)
       else {
@@ -47,6 +50,8 @@ export default function Home() {
         )
         
         if (todaySchedule) {
+          setTodayScheduleId(todaySchedule.id) // Guardamos el ID del registro actual
+          
           const { data: userData, error: userError } = await supabase
             .from('users')
             .select('name')
@@ -61,6 +66,43 @@ export default function Home() {
     }
     fetchData()
   }, [])
+
+  const handleChangeUser = async () => {
+    if (!selectedUserId || !todayScheduleId) return
+
+    const { error } = await supabase
+      .from('feeding_schedule')
+      .update({ user_id: selectedUserId })
+      .eq('id', todayScheduleId)
+
+    if (error) {
+      console.error('Error updating user:', error)
+      return
+    }
+
+    // Actualizar el nombre mostrado
+    const { data: userData, error: userError } = await supabase
+      .from('users')
+      .select('name')
+      .eq('id', selectedUserId)
+      .single()
+
+    if (!userError && userData) {
+      setTodayUser(userData.name)
+    }
+
+    // Actualizar el scheduleData para reflejar el cambio en el calendario
+    setScheduleData(prevData => 
+      prevData.map(schedule => 
+        schedule.id === todayScheduleId 
+          ? { ...schedule, user_id: selectedUserId }
+          : schedule
+      )
+    )
+
+    setIsModalOpen(false)
+    setSelectedUserId(null)
+  }
 
   const getTileClassName = ({ date }: { date: Date }) => {
     const dateString = date.toISOString().split('T')[0]
@@ -113,13 +155,55 @@ export default function Home() {
       </div>
       
       <div className={styles.buttonContainer}>
-        <button className={styles.button}>
+        <button 
+          className={styles.button}
+          onClick={() => setIsModalOpen(true)}
+        >
           Cambiar Persona
         </button>
         <button className={styles.button}>
           Crear Periodo
         </button>
       </div>
+
+      {isModalOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>Seleccionar Usuario</h3>
+            <div className={styles.modalContent}>
+              {users.map((user) => (
+                <button
+                  key={user.id}
+                  className={`${styles.userButton} ${
+                    selectedUserId === user.id ? styles.selected : ''
+                  }`}
+                  onClick={() => setSelectedUserId(user.id)}
+                >
+                  {user.name}
+                </button>
+              ))}
+            </div>
+            <div className={styles.modalActions}>
+              <button 
+                className={styles.button}
+                onClick={handleChangeUser}
+                disabled={!selectedUserId}
+              >
+                Aceptar
+              </button>
+              <button 
+                className={`${styles.button} ${styles.cancelButton}`}
+                onClick={() => {
+                  setIsModalOpen(false)
+                  setSelectedUserId(null)
+                }}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

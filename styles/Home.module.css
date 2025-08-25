@@ -117,3 +117,74 @@
 .colorBox.user-3 {
   background-color: #ffcdd2;
 }
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal h3 {
+  margin: 0 0 1.5rem 0;
+  color: #4a4a4a;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  color: grey;
+}
+
+.userButton {
+  padding: 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.userButton:hover {
+  background: #f8f9fa;
+}
+
+.userButton.selected {
+  border-color: #228be6;
+  background: #e7f5ff;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.cancelButton {
+  background-color: #868e96;
+}
+
+.cancelButton:hover {
+  background-color: #495057;
+}
