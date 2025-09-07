@@ -181,6 +181,36 @@ export default function Dashboard({ onLogout }: DashboardProps) {
     return ''
   }
 
+  const getTileContent = ({ date }: { date: Date }) => {
+    const dateString = date.toISOString().split('T')[0]
+    const schedule = scheduleData.find(s => s.feeding_date === dateString)
+    
+    if (schedule) {
+      const user = users.find(u => u.id === schedule.user_id)
+      if (user) {
+        return (
+          <div 
+            title={`${user.name}`} 
+            style={{ 
+              position: 'absolute', 
+              top: 0, 
+              left: 0, 
+              width: '100%', 
+              height: '100%', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              cursor: 'help'
+            }}
+          >
+            {date.getDate()}
+          </div>
+        )
+      }
+    }
+    return null
+  }
+
   const handleLogout = async () => {
     await supabase.auth.signOut()
     onLogout()
@@ -205,20 +235,11 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       )}
       
       <div className={styles.calendarSection}>
-        <div className={styles.legend}>
-          <h3>Usuarios:</h3>
-          {users.map((user) => (
-            <div key={user.id} className={styles.legendItem}>
-              <div className={`${styles.colorBox} user-${user.id}`}></div>
-              <span>{user.name}</span>
-            </div>
-          ))}
-        </div>
-        
         <div className={styles.calendarContainer}>
           <Calendar
             className={styles.calendar}
             tileClassName={getTileClassName}
+            tileContent={getTileContent}
             locale="es"
           />
         </div>

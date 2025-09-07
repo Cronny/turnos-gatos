@@ -27,6 +27,24 @@
   color: #eab676;
 }
 
+/* Estilos para ocultar números duplicados en tiles con contenido personalizado */
+.react-calendar__tile {
+  position: relative !important;
+}
+
+.user-1 abbr,
+.user-2 abbr,
+.user-3 abbr {
+  display: none !important;
+}
+
+/* Estilos base para escritorio */
+.react-calendar__tile {
+  min-height: 60px !important;
+  padding: 0.5rem !important;
+  font-size: 1rem !important;
+}
+
 /* Estilos globales para react-calendar en móviles */
 @media (max-width: 768px) {
   .react-calendar {
@@ -51,6 +69,7 @@
 
   .react-calendar__tile {
     max-width: 100% !important;
+    min-height: 40px !important;
     height: 40px !important;
     font-size: 0.8rem !important;
     padding: 0.2rem !important;
@@ -72,6 +91,7 @@
   }
 
   .react-calendar__tile {
+    min-height: 35px !important;
     height: 35px !important;
     font-size: 0.7rem !important;
   }

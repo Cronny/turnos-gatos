@@ -30,7 +30,7 @@
   background: rgba(255, 255, 255, 0.8);
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  flex: 1;
+  width: 100%;
 }
 
 .calendar {
@@ -64,8 +64,8 @@
 
 .calendarSection {
   display: flex;
-  gap: 2rem;
-  max-width: 1200px;
+  justify-content: center;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -263,31 +263,10 @@
   }
 
   .calendarSection {
-    flex-direction: column;
-    gap: 1rem;
     margin: 0;
   }
 
-  .legend {
-    order: 2;
-    padding: 1rem;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .legend h3 {
-    font-size: 1rem;
-    margin-bottom: 0.8rem;
-    text-align: center;
-  }
-
-  .legendItem {
-    justify-content: center;
-    margin-bottom: 0.6rem;
-  }
-
   .calendarContainer {
-    order: 1;
     padding: 1rem;
     max-width: 100%;
     margin: 0;
@@ -387,4 +366,9 @@
     padding: 0.7rem;
     font-size: 0.8rem;
   }
+}
+
+/* Estilos para mejorar los tooltips del calendario */
+.calendar [title] {
+  cursor: help;
 }
