@@ -26,3 +26,57 @@
 .react-calendar__month-view__days__day--neighboringMonth {
   color: #eab676;
 }
+
+/* Estilos globales para react-calendar en móviles */
+@media (max-width: 768px) {
+  .react-calendar {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 0.8rem !important;
+  }
+
+  .react-calendar__navigation {
+    height: 44px !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .react-calendar__navigation button {
+    min-width: 44px !important;
+    font-size: 0.9rem !important;
+  }
+
+  .react-calendar__month-view__weekdays {
+    font-size: 0.7rem !important;
+  }
+
+  .react-calendar__tile {
+    max-width: 100% !important;
+    height: 40px !important;
+    font-size: 0.8rem !important;
+    padding: 0.2rem !important;
+  }
+
+  .react-calendar__month-view__days__day--weekend {
+    color: #000000 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .react-calendar {
+    font-size: 0.7rem !important;
+  }
+
+  .react-calendar__navigation button {
+    font-size: 0.8rem !important;
+    min-width: 40px !important;
+  }
+
+  .react-calendar__tile {
+    height: 35px !important;
+    font-size: 0.7rem !important;
+  }
+
+  .react-calendar__month-view__weekdays {
+    font-size: 0.6rem !important;
+  }
+}
