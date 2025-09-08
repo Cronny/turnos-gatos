@@ -100,3 +100,17 @@
     font-size: 0.6rem !important;
   }
 }
+
+.period-border-1 {
+  border: 1.5px solid #2196f3 !important; /* azul */
+  box-sizing: border-box;
+}
+.period-border-2 {
+  border: 1.5px solid #43a047 !important; /* verde */
+  border-style: dotted;
+  box-sizing: border-box;
+}
+.period-border-3 {
+  border: 1.5px solid #e57373 !important; /* rojo/rosado */
+  box-sizing: border-box;
+}

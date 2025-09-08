@@ -15,6 +15,13 @@ type User = {
   name: string
 }
 
+type FeedingPeriod = {
+  id: number
+  user_id: number
+  start_date: string
+  end_date: string
+}
+
 interface DashboardProps {
   onLogout: () => void
 }
@@ -23,6 +30,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   const [scheduleData, setScheduleData] = useState<FeedingSchedule[]>([])
   const [todayUser, setTodayUser] = useState<string>('')
   const [users, setUsers] = useState<User[]>([])
+  const [feedingPeriods, setFeedingPeriods] = useState<FeedingPeriod[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null)
   const [todayScheduleId, setTodayScheduleId] = useState<number | null>(null)
@@ -76,6 +84,14 @@ export default function Dashboard({ onLogout }: DashboardProps) {
             setTodayUser(userData.name)
           }
         }
+      }
+
+      // Cargar feeding_periods
+      const { data: periodsData, error: periodsError } = await supabase
+        .from('feeding_periods')
+        .select('id, user_id, start_date, end_date');
+      if (!periodsError && periodsData) {
+        setFeedingPeriods(periodsData);
       }
     }
     fetchData()
@@ -176,13 +192,24 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   }
 
   const getTileClassName = ({ date }: { date: Date }) => {
-    const dateString = date.toISOString().split('T')[0]
-    const schedule = scheduleData.find(s => s.feeding_date === dateString)
-    
+    const dateString = date.toISOString().split('T')[0];
+    const classes = [];
+
+    // Colores de usuario por feeding_schedule
+    const schedule = scheduleData.find(s => s.feeding_date === dateString);
     if (schedule) {
-      return `user-${schedule.user_id}`
+      classes.push(`user-${schedule.user_id}`);
     }
-    return ''
+
+    // Borde si está en un feeding_period
+    const period = feedingPeriods.find(p => 
+      dateString >= p.start_date && dateString <= p.end_date
+    );
+    if (period && !schedule) {
+      classes.push(`period-border-${period.user_id}`);
+    }
+
+    return classes.join(' ');
   }
 
   const getTileContent = ({ date }: { date: Date }) => {
