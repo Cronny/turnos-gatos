@@ -33,6 +33,10 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
 
+  // Estados para mostrar información de fechas
+  const [showDateInfo, setShowDateInfo] = useState(false)
+  const [selectedDateInfo, setSelectedDateInfo] = useState<{ date: string, userName: string } | null>(null)
+
   useEffect(() => {
     async function fetchData() {
       // Obtener usuarios
@@ -200,7 +204,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center',
-              cursor: 'help'
+              cursor: 'pointer'
             }}
           >
             {date.getDate()}
@@ -209,6 +213,27 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       }
     }
     return null
+  }
+
+  const handleDateClick = (date: Date) => {
+    const dateString = date.toISOString().split('T')[0]
+    const schedule = scheduleData.find(s => s.feeding_date === dateString)
+    
+    if (schedule) {
+      const user = users.find(u => u.id === schedule.user_id)
+      if (user) {
+        setSelectedDateInfo({
+          date: date.toLocaleDateString('es-ES', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          }),
+          userName: user.name
+        })
+        setShowDateInfo(true)
+      }
+    }
   }
 
   const handleLogout = async () => {
@@ -240,6 +265,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
             className={styles.calendar}
             tileClassName={getTileClassName}
             tileContent={getTileContent}
+            onClickDay={handleDateClick}
             locale="es"
           />
         </div>
@@ -360,6 +386,28 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                 }}
               >
                 Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showDateInfo && selectedDateInfo && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>{selectedDateInfo.userName}</h3>
+            <div className={styles.modalContent}>
+              <p><strong>Fecha:</strong> {selectedDateInfo.date}</p>
+            </div>
+            <div className={styles.modalActions}>
+              <button 
+                className={styles.button}
+                onClick={() => {
+                  setShowDateInfo(false)
+                  setSelectedDateInfo(null)
+                }}
+              >
+                Cerrar
               </button>
             </div>
           </div>
